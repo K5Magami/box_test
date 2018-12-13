@@ -21,7 +21,7 @@ import com.box.sdk.InMemoryLRUAccessTokenCache;
 public class QuickStart {
 	public static void main(String args[]) throws IOException {
 		// 有効期間が限られているDeveloper token
-		BoxAPIConnection api = new BoxAPIConnection("");
+		BoxAPIConnection api = new BoxAPIConnection("2EJSNoXSDgyWkwevsfjnxWu4u9Gl30qh");
 		BoxFolder rootFolder = BoxFolder.getRootFolder(api);
 
 		for (BoxItem.Info itemInfo : rootFolder) {
