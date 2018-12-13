@@ -42,7 +42,7 @@ public class UploadFile {
 		}
 
 		// Box内の対象フォルダにファイルが存在するかを判定
-		String existFileId = isExistFile("sample.txt", localFolder);
+		String existFileId = isExistFile("sample.txt" , localFolder);
 		System.out.println(existFileId);
 
 		File file =	new File("resource/sample.txt");
