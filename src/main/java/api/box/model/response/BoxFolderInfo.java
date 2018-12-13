@@ -1,6 +1,7 @@
-package api.box.model;
+package api.box.model.response;
 
 public class BoxFolderInfo {
+	
 	private final boolean isExists;
     private final long folderId;
 
