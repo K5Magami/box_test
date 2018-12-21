@@ -22,8 +22,9 @@ apply plugin: 'eclipse'
 apply plugin: 'idea'
 
 bootJar {
-	baseName = 'gs-rest-service'
-	version =  '0.1.0'
+	baseName = 'box-api'
+	version =  '0.2.0'
+    archiveName = "${baseName}.jar"
 }
 
 dependencies {
@@ -41,7 +42,7 @@ dependencies {
 
     // spockのインストール
     testCompile "org.spockframework:spock-core:1.1-groovy-2.4-rc-2"
-	
+
 	// spring bootインストール
 	compile "org.springframework.boot:spring-boot-starter-web"
 	testCompile "org.springframework.boot:spring-boot-starter-test"
