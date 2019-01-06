@@ -20,12 +20,13 @@ public class BoxApiController {
 	* フォルダ情報取得
 	* @param folderId
 	* @param folderName
+	 * @throws Exception 
 	*/
 	@RequestMapping(value = "/folder", method = RequestMethod.GET)
 	public BoxFolderInfo getFolderInfoController(
 			@RequestParam(value="folderId", defaultValue="") String folderId,
 			@RequestParam(value="folderName", defaultValue="") String folderName 
-	) {
+	) throws Exception {
 		
 		// Boxフォルダ情報取得用サービスクラスを設定
 		// TODO BoxFolderInfoServiceはDIする形にしたい
