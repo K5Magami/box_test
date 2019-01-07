@@ -1,4 +1,4 @@
-package box;
+package api.box.service;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -21,12 +21,12 @@ import com.box.sdk.InMemoryLRUAccessTokenCache;
 public class QuickStart {
 	public static void main(String args[]) throws IOException {
 		// 有効期間が限られているDeveloper token
-		BoxAPIConnection api = new BoxAPIConnection("2EJSNoXSDgyWkwevsfjnxWu4u9Gl30qh");
-		BoxFolder rootFolder = BoxFolder.getRootFolder(api);
+//		BoxAPIConnection api = new BoxAPIConnection("2EJSNoXSDgyWkwevsfjnxWu4u9Gl30qh");
+//		BoxFolder rootFolder = BoxFolder.getRootFolder(api);
 
-		for (BoxItem.Info itemInfo : rootFolder) {
-		    System.out.format("[%s] %s\n", itemInfo.getID(), itemInfo.getName());
-		}
+//		for (BoxItem.Info itemInfo : rootFolder) {
+//		    System.out.format("[%s] %s\n", itemInfo.getID(), itemInfo.getName());
+//		}
 //
 //		// ファイルの読み込みまで検証
 //		Path path = FileSystems.getDefault().getPath("resource", "sample.txt");
@@ -41,25 +41,25 @@ public class QuickStart {
         //implement IAccessTokenCache to store and retrieve access tokens appropriately for your environment.
 
 		// アクセストークンのキャッシュ設定（多分使い終わったらdeleteするのが吉）
-//		IAccessTokenCache accessTokenCache = new InMemoryLRUAccessTokenCache(1);
-//
-//        Reader reader = new FileReader("resource/config.json");
-//        BoxConfig boxConfig = BoxConfig.readFrom(reader);
-//        System.out.println(boxConfig.getClientId());
-//        System.out.println(boxConfig.getClientSecret());
-//        System.out.println(boxConfig.getEnterpriseId());
-//        System.out.println(boxConfig.getJWTEncryptionPreferences());
-//
-//        BoxDeveloperEditionAPIConnection api = BoxDeveloperEditionAPIConnection.getAppEnterpriseConnection(
-//                boxConfig, accessTokenCache);
-//
-//		BoxFolder rootFolder = BoxFolder.getRootFolder(api);
-//
-//		for (BoxItem.Info itemInfo : rootFolder) {
-//		    System.out.format("[%s] %s\n", itemInfo.getID(), itemInfo.getName());
-//		}
-//
-//		api.revokeToken();
+		IAccessTokenCache accessTokenCache = new InMemoryLRUAccessTokenCache(1);
+
+        Reader reader = new FileReader("resource/config.json");
+        BoxConfig boxConfig = BoxConfig.readFrom(reader);
+        System.out.println(boxConfig.getClientId());
+        System.out.println(boxConfig.getClientSecret());
+        System.out.println(boxConfig.getEnterpriseId());
+        System.out.println(boxConfig.getJWTEncryptionPreferences());
+
+        BoxDeveloperEditionAPIConnection api = BoxDeveloperEditionAPIConnection.getAppEnterpriseConnection(
+                boxConfig, accessTokenCache);
+
+		BoxFolder rootFolder = BoxFolder.getRootFolder(api);
+
+		for (BoxItem.Info itemInfo : rootFolder) {
+		    System.out.format("[%s] %s\n", itemInfo.getID(), itemInfo.getName());
+		}
+
+		api.revokeToken();
 
 	}
 }

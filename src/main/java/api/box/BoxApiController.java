@@ -8,10 +8,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import api.box.model.response.BoxFileInfo;
 import api.box.model.response.BoxFolderInfo;
-import box.BoxFileCreateService;
-import box.BoxFileUpdateService;
-import box.BoxFolderCreateService;
-import box.BoxFolderInfoService;
+import api.box.service.BoxFileCreateService;
+import api.box.service.BoxFileUpdateService;
+import api.box.service.BoxFolderCreateService;
+import api.box.service.BoxFolderInfoService;
 
 @RestController
 public class BoxApiController {

@@ -1,4 +1,4 @@
-package box;
+package api.box.service;
 
 import java.io.FileReader;
 import java.io.Reader;

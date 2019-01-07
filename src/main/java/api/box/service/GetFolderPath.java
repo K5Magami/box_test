@@ -1,4 +1,4 @@
-package box;
+package api.box.service;
 
 import java.util.Optional;
 import java.util.stream.StreamSupport;
