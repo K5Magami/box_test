@@ -44,7 +44,7 @@ public class BoxApiController {
 	public BoxFolderInfo mkFolderController(
 			@RequestParam(value="folderId", defaultValue="") String folderId,
 			@RequestParam(value="folderName", defaultValue="") String folderName 
-    ) {
+    )throws Exception  {
 		// Boxフォルダ情報作成用サービスクラスのインスタンス作成
 		BoxFolderCreateService service = new BoxFolderCreateService();
 		

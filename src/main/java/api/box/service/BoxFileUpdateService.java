@@ -10,8 +10,11 @@ import java.util.stream.StreamSupport;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.box.sdk.BoxAPIConnection;
+import com.box.sdk.BoxDeveloperEditionAPIConnection;
 import com.box.sdk.BoxFile;
 import com.box.sdk.BoxFolder;
+import com.box.sdk.IAccessTokenCache;
+import com.box.sdk.InMemoryLRUAccessTokenCache;
 import com.box.sdk.BoxItem.Info;
 
 import api.box.model.response.BoxFileInfo;
@@ -19,35 +22,57 @@ import api.box.model.response.BoxFileInfo;
 public class BoxFileUpdateService {
 	public BoxFileInfo execute(MultipartFile file, String fileName, long targetFolderId) throws Exception {
 
-		BoxAPIConnection api = new BoxAPIConnection("");
+		BoxDeveloperEditionAPIConnection api = null;
+		long fileId = -1;
+		FileInputStream fileInputStream = null;
+		File convFile = null;
 
-		// 検索元のFolder情報を取得
-		BoxFolder folder = new BoxFolder(api, String.valueOf(targetFolderId));
-		
-		// 対象フォルダーから既存のファイル情報を取得
-		String existFileId = this.isExistFile(fileName, folder);
-		if (existFileId.isEmpty()) {
-			return new BoxFileInfo(false, -1);
-		}
-
-		// MultiparFileをFileに型変換
-		File convFile = this.convert(file);
 		
 		// Boxファイル更新
-		try (FileInputStream fileInputStream = new FileInputStream(convFile)) {
+		try {
+			
+			BoxApiConnectionService boxApiConnectionService = new BoxApiConnectionService();
+	        api = boxApiConnectionService.getConnection();
+	        api.asUser("3560300031");
+			
+			// 検索元のFolder情報を取得
+			BoxFolder folder = new BoxFolder(api, String.valueOf(targetFolderId));
+			
+			// 対象フォルダーから既存のファイル情報を取得
+			String existFileId = this.isExistFile(fileName, folder);
+			if (existFileId.isEmpty()) {
+				return new BoxFileInfo(false, -1);
+			}
+			
+			// MultiparFileをFileに型変換
+			convFile = this.convert(file);
+			fileInputStream = new FileInputStream(convFile);
+			
 			BoxFile boxFile = new BoxFile(api, existFileId);
-			boxFile.uploadNewVersion(fileInputStream);
+			Info fileInfo = boxFile.uploadNewVersion(fileInputStream);
+			
+			fileId = Long.valueOf(fileInfo.getID());
+			
 		} catch (Exception e) {
 			throw e;
 		} finally {
-			convFile.delete();
+			if (fileInputStream != null) {
+				fileInputStream.close();
+			}
+			if (convFile != null) {
+				convFile.delete();				
+			}
+		}
+		
+		// fileIdが初期値の場合はfalseをリターンする
+		if (fileId == -1) {
+			return new BoxFileInfo(false, -1);
 		}
 
-		Long fileId = Long.valueOf(existFileId);
 		return new BoxFileInfo(true, fileId);
 	}
 
-	public File convert(MultipartFile file) throws IOException {
+	private File convert(MultipartFile file) throws IOException {
 		File convFile = new File(file.getOriginalFilename());
 		convFile.createNewFile();
 		FileOutputStream fos = new FileOutputStream(convFile);

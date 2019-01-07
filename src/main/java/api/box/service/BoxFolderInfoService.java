@@ -1,10 +1,7 @@
 package api.box.service;
 
-import java.io.FileReader;
-import java.io.Reader;
 import java.util.stream.StreamSupport;
 
-import com.box.sdk.BoxConfig;
 import com.box.sdk.BoxDeveloperEditionAPIConnection;
 import com.box.sdk.BoxFolder;
 import com.box.sdk.IAccessTokenCache;
@@ -15,9 +12,6 @@ import api.box.model.response.BoxFolderInfo;
 
 public class BoxFolderInfoService {
 	public BoxFolderInfo execute(long targetFolderId, String targetFolderName) throws Exception {
-		
-		// アクセストークンのキャッシュ設定（多分使い終わったらdeleteするのが吉）
-		IAccessTokenCache accessTokenCache = new InMemoryLRUAccessTokenCache(10);
 		
 		BoxDeveloperEditionAPIConnection api = null;
 		String searchResult = "";
