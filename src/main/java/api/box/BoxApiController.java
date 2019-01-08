@@ -1,5 +1,6 @@
 package api.box;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -8,13 +9,21 @@ import org.springframework.web.multipart.MultipartFile;
 
 import api.box.model.response.BoxFileInfo;
 import api.box.model.response.BoxFolderInfo;
-import api.box.service.BoxFileCreateService;
-import api.box.service.BoxFileUpdateService;
-import api.box.service.BoxFolderCreateService;
 import api.box.service.BoxFolderInfoService;
+import api.box.service.impl.BoxFileCreateService;
+import api.box.service.impl.BoxFileUpdateService;
+import api.box.service.impl.BoxFolderCreateService;
+import api.box.service.impl.BoxFolderInfoServiceImpl;
 
 @RestController
 public class BoxApiController {
+	
+	private BoxFolderInfoService boxFolderInfoService;
+	
+	@Autowired
+	public void setBoxFolderInfoService(BoxFolderInfoService boxFolderInfoService) {
+		this.boxFolderInfoService = boxFolderInfoService;
+	}
 	
 	/**
 	* フォルダ情報取得
@@ -30,9 +39,11 @@ public class BoxApiController {
 		
 		// Boxフォルダ情報取得用サービスクラスを設定
 		// TODO BoxFolderInfoServiceはDIする形にしたい
-		BoxFolderInfoService service = new BoxFolderInfoService();
+//		BoxFolderInfoServiceImpl service = new BoxFolderInfoServiceImpl();
 		
-		return service.execute(Long.valueOf(folderId), folderName);
+		
+//		return service.execute(Long.valueOf(folderId), folderName);
+		return boxFolderInfoService.execute(Long.valueOf(folderId), folderName);
 	}
 	
 	/**

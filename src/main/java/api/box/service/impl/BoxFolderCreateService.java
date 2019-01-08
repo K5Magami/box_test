@@ -1,4 +1,4 @@
-package api.box.service;
+package api.box.service.impl;
 
 import com.box.sdk.BoxDeveloperEditionAPIConnection;
 import com.box.sdk.BoxFolder;
